@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html><body>
+
+<form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script>
+function getInputs() {
+  return {
+    key: document.getElementById('key'),
+    plain: document.getElementById('plain'),
+    enc: document.getElementById('enc'),
+  }
+}
+
+function decrypt() {
+  const { key, plain, enc } = getInputs()
+  const keyValue = key.value
+  const encValue = enc.value
+  const plainValue = CryptoJS.AES.decrypt(encValue, keyValue)
+  plain.value = plainValue.toString(CryptoJS.enc.Utf8)
+}
+
+function encrypt() {
+  const { key, plain, enc } = getInputs()
+  const keyValue = key.value
+  const plainValue = plain.value
+  const encValue = CryptoJS.AES.encrypt(plainValue, keyValue)
+  enc.value = encValue
+}
+</script>
+
+<label>Key: <input id="key"/></label><br/>
+<label>Plain: <textarea id="plain"></textarea></label><br/>
+<label>Encrypted: <textarea id="enc"></textarea></label><br/>
+
+<button type="button" onclick="decrypt()">Decrypt</button>
+<button type="button" onclick="encrypt()">Encrypt</button>
+</form>
+
+</body></html>
